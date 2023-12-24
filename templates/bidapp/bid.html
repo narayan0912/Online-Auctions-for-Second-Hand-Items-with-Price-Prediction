@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+<style>
+  .c2ontainer {
+    padding: 20px;
+  }
+  
+  .bid-info {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .bid-info h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .bid-info p {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="c2ontainer">
+  <h1>Bid Details</h1>
+  <div class="bid-info" id="'bid-info">
+    <h2>{{ item.title }}</h2>
+    <p>{{ item.description }}</p>
+    <p>Minimum Bid amount: <span id="high-bid">{{ item.bidstart }}</span></p>
+
+   {% if item.sold %}
+     <h2> Sold to {{ item.winner.full_name }} </h2>
+   {% else %}
+    
+    <p>Buy Now Cap: {{ item.buynow }}</p>
+
+    {% if selfbid %}
+    <a href="/sell/{{ item.slug }}"><button type="submit" class="btn btn-primary" id="stop-btn">stop Bid</button></a>
+    {% endif %}
+      
+    {% if bid %}
+    <p>My current Bid: {{ bid.amount }}</p>
+
+    {% endif %}
+    
+    {% if not selfbid %}
+      
+    <form method="post">
+      {% csrf_token %}
+      <input type="number" name="amount" id="bid-amount">
+      <button type="submit" class="btn btn-primary" id="bid-btn">Place Bid</button>
+
+    </form>
+    {% if msg %}
+      <p>{{msg}}</p>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+  </div>
+
+</div>
+
+
+
+ 
+
+{% endblock %}

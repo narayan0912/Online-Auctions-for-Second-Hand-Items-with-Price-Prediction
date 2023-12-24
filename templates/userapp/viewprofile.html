@@ -1,0 +1,98 @@
+<!-- profile.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  /* Additional CSS for browse.html */
+
+  .product-line {
+      display: flex;
+      justify-content: flex-start;
+      gap: 20px;
+      margin-top: 20px;
+  }
+
+  .product-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      text-decoration: none;
+      color: rgb(212, 217, 231);
+  }
+
+  .product-image {
+      width: 200px;
+      height: 200px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .product-name {
+      font-size: 18px;
+      margin-top: 10px;
+  }
+</style>
+  <div class="container">
+    <h1>User Profile</h1>
+    
+    <div class="profile-info">
+      <h2>Username: {{ cuser.username }}</h2>
+      <p>Full Name: {{ profile.full_name }}</p>
+      {% if own %}
+      <p>Email: {{ cuser.email }}</p>
+        
+      {% endif %}
+      <p>Date of Birth: {{ profile.date_of_birth }}</p>
+    </div>
+    
+    <hr>
+    
+    <h2>Posts by {{ cuser.username }}</h2>
+    
+    <div class="container">
+      <div class="product-line">
+          {% for item in posts %}
+              
+          
+          <a href="/view/{{item.slug}}" class="product-item">
+              <img src="/media/{{item.category}}_pics/{{item.slug}}/comp_pic.jpg" alt="Product 1" class="product-image">
+              <p class="product-name">{{item.title}}</p>
+          </a>
+          {% endfor %}
+      </div>
+    </div>
+
+<hr>
+  <h2>Bids you have placed </h2>
+  <p>Only you can see this</p>
+    <div class="container">
+      {% for item in bid %}
+      <a href="/bid/{{item.post.slug}}" class="product-item">
+      
+        <p class="product-name">{{item.post.title}} </p>
+      </a>
+      {% endfor %}
+
+    </div>
+<hr>
+    <div class="woncontainer">
+      <h2>Bids Won </h2>
+      <p>Only you can see this</p>
+      {% for item in wonbid %}
+      <div class="product-item">
+        <p class="product-name">
+        {% for row in item %}
+        {{row}}
+        {% endfor %}
+        </p>
+        
+      </div>
+      {% endfor %}
+      
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+{% endblock %}

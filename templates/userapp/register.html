@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+    <body>
+        <style>
+
+            .c2ontainer {
+                max-width: 400px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+            input[type="text"], input[type="password"], input[type="email"] {
+                width: 100%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                box-sizing: border-box;
+            }
+            button {
+                background-color: #333;
+                color: #fff;
+                padding: 12px 20px;
+                margin-top: 20px;
+                border: none;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #fff;
+                color: #333;
+            }
+        </style>
+        
+            <div class="c2ontainer">
+            <h1>Register</h1>
+            <form method="post" action="{% url 'register' %}">
+        {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Register</button>
+        
+                <p> already an account? </p> <a href="{% url 'login' %}">Login</a>
+            </form>
+            </div>
+    </body>
+    <br>
+    <br>
+    <br>
+</html>
+{% endblock %}

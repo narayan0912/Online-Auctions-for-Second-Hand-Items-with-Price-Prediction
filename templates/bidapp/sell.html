@@ -1,0 +1,29 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h1>Sell Details</h1>
+    
+    <h2>Post Title: {{ post.title }}</h2>
+    
+    <h2>Bidders:</h2>
+<form method="post">
+  {% csrf_token %}
+  <fieldset>
+    <legend>Select a winner:</legend>
+    {% for bid in bids %}
+      <div>
+        {{ bid.participant.full_name }} : {{ bid.amount }}
+        <input type="radio" name="pk" value="{{bid.participant.id}}"> 
+      </div>
+      <br>
+    {% endfor %}
+    <div>
+      <button type="submit" class="btn btn-primary join-bid-button">Submit</button>
+    </div>
+  </fieldset>
+</form>
+
+  </div>
+{% endblock %}

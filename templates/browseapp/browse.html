@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    /* Additional CSS for browse.html */
+
+    .product-line {
+        display: flex;
+        justify-content: flex-start;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .product-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        text-decoration: none;
+        color: #000;
+    }
+
+    .product-image {
+        width: 200px;
+        height: 200px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-name {
+        font-size: 18px;
+        margin-top: 10px;
+    }
+</style>
+
+{% if auth %}
+    
+
+<div class="container">
+    <h1>Browse Products on your area</h1>
+    <div class="product-line">
+        {% for item in filtered %}
+            
+        <a href="/view/{{item.slug}}" class="product-item">
+            <img src="/media/{{item.category}}_pics/{{item.slug}}/comp_pic.jpg" alt="Product 1" class="product-image">
+            <p class="product-name">{{item.title}}</p>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+<hr>
+{% endif %}
+
+    <div class="c2ontainer">
+        <h1>Browse All Products</h1>
+        <div class="product-line">
+            {% for item in all %}
+                
+            
+            <a href="/view/{{item.slug}}" class="product-item">
+                <img src="/media/{{item.category}}_pics/{{item.slug}}/comp_pic.jpg" alt="Product 1" class="product-image">
+                <p class="product-name">{{item.title}}</p>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

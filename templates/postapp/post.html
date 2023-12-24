@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <div class="container">
+        <style>
+            button {
+                background-color: #333;
+                color: #fff;
+                padding: 12px 20px;
+                margin-top: 20px;
+                border: none;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #fff;
+                color: #333;
+            }
+        </style>
+        <h1>Create a New Post</h1>
+
+        
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+           
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" name="title">
+            </div>
+            <div class="mb-3">
+                <label for="category" class="form-label">What category does it fall under?</label>
+                <select  name="category">
+                      <option value="vehicle">vehicle</option>
+                      <option value="electronics">electronics</option>
+                      <option value="digital-prod">digital product</option>
+                      <option value="real-eastate">Real-Eastate</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="location" class="form-label">Where do you want your customers to be from?></label>
+                <select  name="location">
+                      <option value="Chitwan">Chitwan</option>
+                      <option value="Pokhara">Pokhara</option>
+                      <option value="Kathmandu">Kathmandu</option>
+                      <option value="Lamjung">Lamjung</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="Describe" class="form-label">Describe your item</label>
+                <textarea type="text" name="Description"> </textarea>
+            </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">Set starting point for bidding</label>
+                <input type="number" name="bidstart" id="bidstart" required>
+            </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">Set a buy immedietly price</label>
+                <input type="number" name="buynow" required>
+            </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">Set a end time for the product's bidding</label>
+                <input type="datetime-local" name="endtime" required>
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Image</label>
+                <input type="file" accept="jpeg jpg gif png" name="comp_image" required>
+            </div>
+            <button type="submit" >Submit</button>
+        </form>
+
+        <hr>
+
+
+        <form method="post" id="prediction-form" action="{% url 'predict' %}">
+          <h1>Car Price Prediction</h1>
+
+          <h2 id="prediction-result">Result Price: </h2>
+          <div class="form-group">
+            <label for="price">Present Price in Lakhs:</label>
+            <input type="number" class="form-control" id="price" name="price" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="age">Car Age:</label>
+            <input type="number" class="form-control" id="age" name="age" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="seller">Seller Type:</label>
+            <select class="form-control" id="seller" name="seller" required>
+              <option value="Individual">Individual</option>
+              <option value="Dealer">Dealer</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="fuel">Fuel Type:</label>
+            <select class="form-control" id="fuel" name="fuel" required>
+              <option value="Petrol">Petrol</option>
+              <option value="Diesel">Diesel</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="transmission">Transmission Type:</label>
+            <select class="form-control" id="transmission" name="transmission" required>
+              <option value="Manual">Manual</option>
+              <option value="Automatic">Automatic</option>
+            </select>
+          </div>
+          
+          <button type="submit" >Predict</button>
+        </form>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>
+            document.getElementById('prediction-form').addEventListener('submit', function(event) {
+              event.preventDefault(); // Prevent the default form submission
+          
+              const formData = new FormData(this);
+          
+              fetch('/predict/', {
+                method: 'POST',
+                body: formData
+              })
+              .then(response => response.json())
+              .then(data => {
+                // Update the UI with the prediction result
+                document.getElementById('prediction-result').innerText = 'Predicted Price: ' + data;
+                document.getElementById('bidstart').value = data;
+              })
+              .catch(error => {
+                // Handle the error if the prediction request fails
+                console.log(error);
+                document.getElementById('prediction-result').innerText = 'Error occurred during prediction.';
+              });
+            });
+          </script>
+    </div>
+    <br>
+    <br>
+    <br>
+{% endblock %}
+

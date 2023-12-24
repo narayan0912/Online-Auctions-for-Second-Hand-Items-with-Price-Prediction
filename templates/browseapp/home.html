@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    /* Additional CSS for home.html */
+
+    .main {
+        width: 100%;
+        justify-content: center;
+    }
+    .column {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        -ms-flex-align: center;
+
+    }
+
+    .box {
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        padding: 20px;
+        margin: 15px;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .boxw{
+
+        align-items: center;
+        width: auto;
+        margin: none;
+    }
+
+    .bid-box {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .sell-box {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    .box-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .box-description {
+        margin-bottom: 20px;
+    }
+
+    /* Dark theme styles */
+    body.dark-theme .bid-box {
+        background-color: #0056b3;
+    }
+
+    body.dark-theme .sell-box {
+        background-color: #292f36;
+    }
+</style>
+
+    <div class="container main">
+        <div class="column">
+            <div class="col-md boxw">
+                <div class="box sell-box">
+                    <h2 class="box-title">Go be a Bidder</h2>
+                    <p class="box-description">Explore and bid on exciting products.</p>
+                    <a href="browse" class="btn btn-primary">Start Bidding</a>
+                </div>
+            </div>
+            <div class="col-md boxw">
+                <div class="box sell-box ">
+                    <h2 class="box-title">Go be a Seller</h2>
+                    <p class="box-description">Sell your products to potential buyers.</p>
+                    <a href="post" class="btn btn-primary">Start Selling</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

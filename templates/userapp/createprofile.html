@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block content %}
+    <body>
+        <style>
+            .c2ontainer {
+                max-width: 400px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 24px;
+                margin-bottom: 20px;
+                color: antiquewhite;
+            }
+            input[type="text"], input[type="password"], input[type="email"] {
+                width: 100%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                box-sizing: border-box;
+            }
+            button {
+                background-color: #333;
+                color: #fff;
+                padding: 12px 20px;
+                margin-top: 20px;
+                border: none;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #fff;
+                color: #333;
+            }
+            select {
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                background-color: rgb(24, 26, 37);
+                color: white;
+                border: none;
+                padding: 8px;
+                border-radius: 5px;
+                width: 100%;
+                cursor: pointer;
+              }
+            
+              select option {
+                background-color: rgb(22, 20, 20);
+                color: rgb(202, 202, 202);
+              }
+        </style>
+        
+            <div class="c2ontainer">
+            <h1>Profile Creation</h1>
+            <h3>Your profile is needed to identify you on your posts or bid</h3><br>
+            <h3 color="red">Be careful it cannot be changed!!!</h3>
+            <form method="post" action="{% url 'createprofile' %}">
+                {% csrf_token %}
+                <label for="fullname">Full Name:</label>
+                <input type="text" id="fullname" name="fullname" required>
+                <br>
+                <br>
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
+                <br>
+                <br>
+                <label for="location">Primary Location:</label>
+                
+                <select id="location" name="location" required>
+                    <option value="">Select Location</option>
+                    <option value="kathmandu">Kathmandu</option>
+                    <option value="pokhara">Pokhara</option>
+                    <option value="chitwan">Chitwan</option>
+                    <option value="birgunj">Birgunj</option>
+                </select>
+                <br>
+                <br>
+                <label for="dob">your phone number:</label>
+                <input type="number" id="phone" name="phone_number" required>
+                <button type="submit">create Profile</button>
+        
+            </form>
+            </div>
+    </body>
+</html>
+{% endblock %}

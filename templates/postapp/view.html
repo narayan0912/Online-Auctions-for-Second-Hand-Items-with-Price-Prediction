@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* Additional CSS for view.html */
+
+
+    .product-container {
+        padding : 20px;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        background-color: rgba(67, 71, 80, 0.363) ;
+        border-radius: 16px;
+        color: #dee2e6;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.568);
+        font-family: Verdana, Tahoma, sans-serif, Helvetica, sans-serif;
+    }
+
+    .product-image {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.795);
+    }
+
+    .product-details {
+        margin-top: 20px;
+    }
+
+    .product-title {
+        font-size: 24px;
+        
+        margin-bottom: 10px;
+    }
+
+    .product-descriptions {
+        margin-bottom: 20px;
+        font-size: 19px;
+    }
+
+    .product-price {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .join-bid-button {
+        background-color: #252a30;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .join-bid-button:hover {
+        background-color: #12161b;
+    }
+</style>
+
+
+<script>
+    // Get the target date from the Django template context
+    var targetDate = new Date("{{ end|date:'Y-m-d H:i:s' }}");
+  
+    // Calculate the time difference between the current date and the target date
+    var timeDifference = targetDate.getTime() - Date.now();
+  
+    // Start the timer
+    var countdown = setInterval(function() {
+      // Calculate the remaining time
+      var remainingTime = targetDate.getTime() - Date.now();
+  
+      // Check if the target date has passed
+      if (remainingTime <= 0) {
+        clearInterval(countdown);
+        console.log("Target date has passed");
+        return;
+      }
+  
+      // Convert remaining time to hours, minutes, and seconds
+      var hours = Math.floor(remainingTime / (1000 * 60 * 60));
+      var minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+      let timer = document.getElementById('timer');
+      // Display the remaining time
+      timer.innerHTML = `${hours}:${minutes}:${seconds}`;
+      console.log(hours + "h " + minutes + "m " + seconds + "s");
+    }, 1000); // Update every second
+</script>
+
+
+<div class="container product-container" class="column" alignitems="center">
+    <h3 id="timer">00:00:00</h3>
+    {% if not available %}
+        <h3>Item is unavailable for bidding</h3>
+    {% endif %}
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{ img }}" alt="Product Image" class="img-fluid product-image">
+        </div>
+        <div class="col-md-6 product-details">
+            {% if item.sold %}
+            <h3>Sold</h3>
+            {% endif %}
+
+            <p class="username">Seller: {{ item.user.username }}</p>
+            <h1 class="product-title"> {{ item.title }} </h1>
+            <p class="product-descriptions">{{ item.description }}</p>
+            <p class="product-descriptions">{{ item.sell_location }}</p>
+            <p class="product-price">Start Price: Rs. {{ item.bidstart }}</p>
+            <p class="product-price">Buy Now Price: Rs. {{ item.buynow }}</p>
+            {% if available %}
+            {% if not selfpost %}
+            <a href="/bid/{{item.slug}}"><button class="btn btn-primary join-bid-button">Join Bid</button></a>
+            {% else %}
+            <a href="/sell/{{item.slug}}"><button class="btn btn-primary join-bid-button">View Bid</button></a>
+            {% endif %}    
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

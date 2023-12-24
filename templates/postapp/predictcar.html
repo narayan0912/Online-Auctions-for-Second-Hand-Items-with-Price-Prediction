@@ -1,0 +1,64 @@
+<!-- predict.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+     <style>
+      button {
+        background-color: #333;
+        color: #fff;
+        padding: 12px 20px;
+        margin-top: 20px;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #fff;
+        color: #333;
+    }
+     </style>
+    <h1>Car Price Prediction</h1>
+    <form method="post" action="{% url 'predict' %}">
+      
+      <div class="form-group">
+        <label for="price">Present Price in Lakhs:</label>
+        <input type="number" class="form-control" id="price" name="price" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="age">Car Age:</label>
+        <input type="number" class="form-control" id="age" name="age" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="seller">Seller Type:</label>
+        <select class="form-control" id="seller" name="seller" required>
+          <option value="Individual">Individual</option>
+          <option value="Dealer">Dealer</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="fuel">Fuel Type:</label>
+        <select class="form-control" id="fuel" name="fuel" required>
+          <option value="Petrol">Petrol</option>
+          <option value="Diesel">Diesel</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="transmission">Transmission Type:</label>
+        <select class="form-control" id="transmission" name="transmission" required>
+          <option value="Manual">Manual</option>
+          <option value="Automatic">Automatic</option>
+        </select>
+      </div>
+      
+      <button type="submit" class="btn btn-primary">Predict</button>
+    </form>
+    
+    {% if output %}
+      <h2>Prediction: {{ output }}</h2>
+    {% endif %}
+  </div>
+{% endblock %}
